@@ -7,7 +7,14 @@ const paymentRoutes = require('./routes/payment.routes');
 
 const app = express();
 
-app.use(cors());
+// Configure CORS
+const allowedOrigins = [process.env.FRONTEND_URL];
+app.use(cors({
+    origin: allowedOrigins,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true,
+}));
+
 app.use(express.json());
 app.use(rateLimiter);
 
