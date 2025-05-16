@@ -140,7 +140,7 @@ function generateAdminEmailHTML(nome, email, telefone, linkId) {
           </table>
 
           <p><strong>Documentos anexados:</strong></p>
-          <p>1. Foto do documento</p>
+          <p>1. Documento oficial com foto</p>
           <p>2. Selfie com documento</p>
 
           <div class="footer">
