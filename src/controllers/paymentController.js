@@ -43,8 +43,8 @@ exports.submitPayment = async (req, res) => {
       const data = await response.json();
       console.log('Data from IPWhoIs: ', data);
       if (data.success) {
-        console.log('data.success');
-        locationInfo = `${data.city}, ${data.region}, ${data.country} (ISP: ${data.connection?.isp})`;
+        console.log('data.success', data);
+        locationInfo = `${data.city}, ${data.region}, ${data.country}`;
         console.log('Location info: ', locationInfo);
       }
     } catch (err) {
