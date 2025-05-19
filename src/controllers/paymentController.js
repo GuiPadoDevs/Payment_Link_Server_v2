@@ -33,7 +33,8 @@ exports.submitPayment = async (req, res) => {
       return res.status(400).json({ error: 'Dados obrigatórios ausentes.' });
     }
 
-    // const clientIp = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.ip;
+    const clientIp = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.ip;
+    console.log('Client IP:', clientIp);
 
     // let locationInfo = 'Localização indisponível';
     // try {
