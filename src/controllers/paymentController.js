@@ -88,7 +88,7 @@ exports.submitPayment = async (req, res) => {
 
 // Funções auxiliares para gerar os templates de email
 
-function generateAdminEmailHTML(nome, email, telefone, linkId) {
+function generateAdminEmailHTML(nome, email, telefone, linkId, clientIp, locationInfo) {
   return `
     <!DOCTYPE html>
     <html>
