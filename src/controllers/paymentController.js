@@ -33,18 +33,18 @@ exports.submitPayment = async (req, res) => {
       return res.status(400).json({ error: 'Dados obrigatórios ausentes.' });
     }
 
-    const clientIp = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.ip;
+    // const clientIp = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.ip;
 
-    let locationInfo = 'Localização indisponível';
-    try {
-      const response = await fetch(`https://ipwho.is/${clientIp}`);
-      const data = await response.json();
-      if (data.success) {
-        locationInfo = `${data.city}, ${data.region}, ${data.country} (ISP: ${data.connection?.isp})`;
-      }
-    } catch (err) {
-      console.warn('Erro ao buscar localização do IP:', err);
-    }
+    // let locationInfo = 'Localização indisponível';
+    // try {
+    //   const response = await fetch(`https://ipwho.is/${clientIp}`);
+    //   const data = await response.json();
+    //   if (data.success) {
+    //     locationInfo = `${data.city}, ${data.region}, ${data.country} (ISP: ${data.connection?.isp})`;
+    //   }
+    // } catch (err) {
+    //   console.warn('Erro ao buscar localização do IP:', err);
+    // }
 
     const link = await PaymentLink.findOne({ id: linkId });
     if (!link) {
@@ -58,7 +58,8 @@ exports.submitPayment = async (req, res) => {
       return res.status(400).json({ error: 'Imagens obrigatórias ausentes.' });
     }
 
-    const adminHTML = generateAdminEmailHTML(nome, email, telefone, linkId, clientIp, locationInfo);
+    // const adminHTML = generateAdminEmailHTML(nome, email, telefone, linkId, clientIp, locationInfo);
+    const adminHTML = generateAdminEmailHTML(nome, email, telefone, linkId);
 
     await emailService.sendEmail({
       to: process.env.RESPONSIBLE_EMAIL,
@@ -145,14 +146,6 @@ function generateAdminEmailHTML(nome, email, telefone, linkId) {
             <tr>
               <td><strong>ID do Link:</strong></td>
               <td>${linkId}</td>
-            </tr>
-            <tr>
-              <td><strong>IP do cliente:</strong></td>
-              <td>${clientIp}</td>
-            </tr>
-            <tr>
-              <td><strong>Localização do cliente:</strong></td>
-              <td>${locationInfo}</td>
             </tr>
             <tr>
               <td><strong>Data/Hora:</strong></td>
