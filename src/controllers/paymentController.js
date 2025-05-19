@@ -36,16 +36,20 @@ exports.submitPayment = async (req, res) => {
     const clientIp = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.ip;
     console.log('Client IP:', clientIp);
 
-    // let locationInfo = 'Localização indisponível';
-    // try {
-    //   const response = await fetch(`https://ipwho.is/${clientIp}`);
-    //   const data = await response.json();
-    //   if (data.success) {
-    //     locationInfo = `${data.city}, ${data.region}, ${data.country} (ISP: ${data.connection?.isp})`;
-    //   }
-    // } catch (err) {
-    //   console.warn('Erro ao buscar localização do IP:', err);
-    // }
+    let locationInfo = 'Localização indisponível';
+    try {
+      const response = await fetch(`https://ipwho.is/${clientIp}`);
+      console.log('Response from IPWhoIs: ', response);
+      const data = await response.json();
+      console.log('Data from IPWhoIs: ', data);
+      if (data.success) {
+        console.log('data.success');
+        locationInfo = `${data.city}, ${data.region}, ${data.country} (ISP: ${data.connection?.isp})`;
+        console.log('Location info: ', locationInfo);
+      }
+    } catch (err) {
+      console.warn('Erro ao buscar localização do IP:', err);
+    }
 
     const link = await PaymentLink.findOne({ id: linkId });
     if (!link) {
