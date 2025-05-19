@@ -34,18 +34,13 @@ exports.submitPayment = async (req, res) => {
     }
 
     const clientIp = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.ip;
-    console.log('Client IP:', clientIp);
 
     let locationInfo = 'Localização indisponível';
     try {
       const response = await fetch(`https://ipwho.is/${clientIp}`);
-      console.log('Response from IPWhoIs: ', response);
       const data = await response.json();
-      console.log('Data from IPWhoIs: ', data);
       if (data.success) {
-        console.log('data.success', data);
         locationInfo = `${data.city}, ${data.region}, ${data.country}`;
-        console.log('Location info: ', locationInfo);
       }
     } catch (err) {
       console.warn('Erro ao buscar localização do IP:', err);
@@ -63,8 +58,7 @@ exports.submitPayment = async (req, res) => {
       return res.status(400).json({ error: 'Imagens obrigatórias ausentes.' });
     }
 
-    // const adminHTML = generateAdminEmailHTML(nome, email, telefone, linkId, clientIp, locationInfo);
-    const adminHTML = generateAdminEmailHTML(nome, email, telefone, linkId);
+    const adminHTML = generateAdminEmailHTML(nome, email, telefone, linkId, clientIp, locationInfo);
 
     await emailService.sendEmail({
       to: process.env.RESPONSIBLE_EMAIL,
@@ -151,6 +145,14 @@ function generateAdminEmailHTML(nome, email, telefone, linkId) {
             <tr>
               <td><strong>ID do Link:</strong></td>
               <td>${linkId}</td>
+            </tr>
+            <tr>
+              <td><strong>IP do cliente:</strong></td>
+              <td>${clientIp}</td>
+            </tr>
+            <tr>
+              <td><strong>Localização do cliente:</strong></td>
+              <td>${locationInfo}</td>
             </tr>
             <tr>
               <td><strong>Data/Hora:</strong></td>
