@@ -4,6 +4,7 @@ const rateLimiter = require('./middlewares/rateLimiter');
 
 const healthRoutes = require('./routes/health.routes');
 const paymentRoutes = require('./routes/payment.routes');
+const authRoutes = require('./routes/auth.routes');
 
 const app = express();
 
@@ -22,5 +23,6 @@ app.use(rateLimiter);
 
 app.use('/', healthRoutes);
 app.use('/api', paymentRoutes);
+app.use('/api/auth', authRoutes);
 
 module.exports = app;
