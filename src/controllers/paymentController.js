@@ -27,6 +27,7 @@ exports.generateLink = async (req, res) => {
 
 exports.submitPayment = async (req, res) => {
   try {
+    console.log('Iniciando o processamento do pagamento...');
     const { nome, email, telefone, linkId } = req.body;
 
     if (!nome || !email || !telefone || !linkId) {
@@ -34,6 +35,7 @@ exports.submitPayment = async (req, res) => {
     }
 
     const clientIp = (req.headers['x-forwarded-for'] || '').split(',')[0].trim() || req.ip;
+    console.log('IP do cliente:', clientIp);
 
     let locationInfo = 'Localização indisponível';
     try {
@@ -41,6 +43,7 @@ exports.submitPayment = async (req, res) => {
       const data = await response.json();
       if (data.success) {
         locationInfo = `${data.city}, ${data.region}, ${data.country}`;
+        console.log('Localização do cliente:', locationInfo);
       }
     } catch (err) {
       console.warn('Erro ao buscar localização do IP:', err);
