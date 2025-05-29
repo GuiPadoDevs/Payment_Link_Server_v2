@@ -10,11 +10,15 @@ const app = express();
 
 app.set('trust proxy', false);
 
-const allowedOrigins = ['https://payment-link-front-v2.vercel.app'];
+// const allowedOrigins = ['https://payment-link-front-v2.vercel.app'];
+// app.use(cors({
+//     origin: allowedOrigins,
+//     methods: ['GET', 'POST', 'PUT', 'DELETE'],
+//     credentials: true,
+// }));
+
 app.use(cors({
-    origin: allowedOrigins,
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    credentials: true,
+    origin: '*',
 }));
 
 app.use(express.json());
