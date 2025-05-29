@@ -9,8 +9,9 @@ const authRoutes = require('./routes/auth.routes');
 const app = express();
 
 app.set('trust proxy', 1);
+console.log('Trust proxy configurado como:', app.get('trust proxy'));
 
-const allowedOrigins = [process.env.FRONTEND_URL];
+const allowedOrigins = ['http://164.152.51.110'];
 app.use(cors({
     origin: allowedOrigins,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
