@@ -10,7 +10,6 @@ const app = express();
 
 app.set('trust proxy', true);
 
-// Configure CORS
 const allowedOrigins = [process.env.FRONTEND_URL];
 app.use(cors({
     origin: allowedOrigins,
