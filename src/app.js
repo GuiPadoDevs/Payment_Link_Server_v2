@@ -10,7 +10,7 @@ const app = express();
 
 app.set('trust proxy', false);
 
-const allowedOrigins = ['http://164.152.51.110'];
+const allowedOrigins = ['https://payment-link-front-v2.vercel.app'];
 app.use(cors({
     origin: allowedOrigins,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
