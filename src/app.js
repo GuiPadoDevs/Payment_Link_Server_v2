@@ -8,7 +8,7 @@ const authRoutes = require('./routes/auth.routes');
 
 const app = express();
 
-app.set('trust proxy', true);
+app.set('trust proxy', 1);
 
 const allowedOrigins = [process.env.FRONTEND_URL];
 app.use(cors({
